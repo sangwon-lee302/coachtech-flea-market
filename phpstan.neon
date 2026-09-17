@@ -1,0 +1,17 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 6
+    paths:
+        - app/
+        - bootstrap/
+        - config/
+        - database/
+        - routes/
+        - tests/
+    ignoreErrors:
+        # スケルトンのサンプルテスト。実際のテストを追加する際に削除する
+        -
+            identifier: method.alreadyNarrowedType
+            path: tests/Unit/ExampleTest.php
