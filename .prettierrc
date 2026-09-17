@@ -1,0 +1,14 @@
+{
+    "plugins": ["prettier-plugin-blade", "prettier-plugin-tailwindcss"],
+    "overrides": [
+        {
+            "files": "*.blade.php",
+            "options": {
+                "parser": "blade",
+                "bladeDirectiveArgSpacing": "none"
+            }
+        }
+    ],
+    "singleQuote": true,
+    "tailwindStylesheet": "./resources/css/app.css"
+}

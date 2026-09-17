@@ -1,0 +1,4 @@
+# Composer・npm・laravel-lang が生成・更新するファイル
+composer.json
+package-lock.json
+lang/
