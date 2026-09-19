@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use Carbon\CarbonImmutable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +25,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // 遅延ロード、fillable でない属性への一括代入、存在しないもしくは取得していない属性へのアクセスを例外にする
+        Model::shouldBeStrict();
+
+        Date::use(CarbonImmutable::class);
     }
 }
