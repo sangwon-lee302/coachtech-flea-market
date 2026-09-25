@@ -6,6 +6,7 @@ use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -31,5 +32,8 @@ class AppServiceProvider extends ServiceProvider
 
         // 本番では migrate:fresh・migrate:reset・db:wipe などの破壊的なコマンドを禁止する
         DB::prohibitDestructiveCommands($this->app->isProduction());
+
+        // 本番ではプロキシの背後でも、生成する URL を https にする（リクエスト自体を https に限るものではない）
+        URL::forceHttps($this->app->isProduction());
     }
 }
