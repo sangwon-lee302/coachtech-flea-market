@@ -5,6 +5,7 @@ namespace App\Providers;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,5 +28,8 @@ class AppServiceProvider extends ServiceProvider
 
         // 日時の計算で元の値を書き換えてしまわないよう、変更不可の CarbonImmutable を使う
         Date::use(CarbonImmutable::class);
+
+        // 本番では migrate:fresh・migrate:reset・db:wipe などの破壊的なコマンドを禁止する
+        DB::prohibitDestructiveCommands($this->app->isProduction());
     }
 }
