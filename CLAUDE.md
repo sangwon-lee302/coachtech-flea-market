@@ -12,6 +12,8 @@
 ./vendor/bin/sail artisan <cmd>  # Artisan
 ./vendor/bin/sail composer <cmd> # Composer
 ./vendor/bin/sail test           # テスト
+./vendor/bin/sail pint           # 書式を整える
+./vendor/bin/sail pint --test    # 書式を検査（ファイルは変更しない）
 ```
 
 `vendor/` がないとき（clone 直後など）は、Sail のイメージで依存関係をインストールする。
