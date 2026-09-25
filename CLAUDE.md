@@ -2,7 +2,24 @@
 
 ## 前提
 
-ホストに PHP と Composer はない。`php` や `composer` をホストで直接実行しない。
+開発環境は Sail で Docker 上に構築する。`php` や `composer` はホストで直接実行せず、Sail 経由で実行する。
+
+## コマンド
+
+```bash
+./vendor/bin/sail up -d          # 起動（アプリは http://localhost、Mailpit は http://localhost:8025）
+./vendor/bin/sail down           # 停止
+./vendor/bin/sail artisan <cmd>  # Artisan
+./vendor/bin/sail composer <cmd> # Composer
+./vendor/bin/sail test           # テスト
+```
+
+`vendor/` がないとき（clone 直後など）は、Sail のイメージで依存関係をインストールする。
+
+```bash
+docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd):/var/www/html" -w /var/www/html \
+    laravelsail/php84-composer:latest composer install --ignore-platform-reqs
+```
 
 ## 言語
 
