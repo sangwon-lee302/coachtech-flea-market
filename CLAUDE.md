@@ -11,6 +11,8 @@
 ./vendor/bin/sail down                # 停止
 ./vendor/bin/sail artisan <cmd>       # Artisan
 ./vendor/bin/sail composer <cmd>      # Composer
+./vendor/bin/sail npm run dev         # Vite の開発サーバーを起動
+./vendor/bin/sail npm run build       # アセットをビルド
 ./vendor/bin/sail test                # テスト
 ./vendor/bin/sail pint                # 書式を整える
 ./vendor/bin/sail pint --test         # 書式を検査（ファイルは変更しない）
@@ -27,6 +29,14 @@ docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd):/var/www/html" -w /var/www/htm
 ## 言語
 
 コメント・ドキュメント・コミットメッセージ・issue・pull request は日本語で書く。識別子は英語。
+
+## 設計の記録
+
+アーキテクチャに関わる決定は、`docs/adr/` に ADR として書く。ファイル名は `NNNN-<英語のケバブケース>.md` とし、形式は既存の ADR にならう。
+
+- 選択肢は「検討した選択肢」の節にだけ書き、「背景」では挙げない。
+- 理由は一般的な長所ではなく、このアプリに照らして書く。各選択肢の短所も省かずに書く。
+- 就職での需要のように、このプロジェクトでだけ意味を持つ理由は、そうと分かるように書く。
 
 ## Git の運用
 
