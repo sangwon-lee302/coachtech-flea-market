@@ -1,0 +1,10 @@
+# Composer と npm が書き換えるファイル
+/composer.json
+/composer.lock
+/package-lock.json
+
+# 生成されるファイルと依存関係
+/bootstrap/cache
+/public/build
+/storage
+/vendor

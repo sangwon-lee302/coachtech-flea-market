@@ -50,9 +50,9 @@ Docker と Git が必要。
 
 起動後は次の URL で開ける。
 
-| 対象 | URL |
-| --- | --- |
-| アプリ | http://localhost |
+| 対象    | URL                   |
+| ------- | --------------------- |
+| アプリ  | http://localhost      |
 | Mailpit | http://localhost:8025 |
 
 停止するときは `./vendor/bin/sail down` を実行する。

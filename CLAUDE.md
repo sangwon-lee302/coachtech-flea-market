@@ -7,16 +7,18 @@
 ## コマンド
 
 ```bash
-./vendor/bin/sail up -d               # 起動（アプリは http://localhost、Mailpit は http://localhost:8025）
-./vendor/bin/sail down                # 停止
-./vendor/bin/sail artisan <cmd>       # Artisan
-./vendor/bin/sail composer <cmd>      # Composer
-./vendor/bin/sail npm run dev         # Vite の開発サーバーを起動
-./vendor/bin/sail npm run build       # アセットをビルド
-./vendor/bin/sail test                # テスト
-./vendor/bin/sail pint                # 書式を整える
-./vendor/bin/sail pint --test         # 書式を検査（ファイルは変更しない）
-./vendor/bin/sail bin phpstan analyse # 静的解析
+./vendor/bin/sail up -d                  # 起動（アプリは http://localhost、Mailpit は http://localhost:8025）
+./vendor/bin/sail down                   # 停止
+./vendor/bin/sail artisan <cmd>          # Artisan
+./vendor/bin/sail composer <cmd>         # Composer
+./vendor/bin/sail npm run dev            # Vite の開発サーバーを起動
+./vendor/bin/sail npm run build          # アセットをビルド
+./vendor/bin/sail test                   # テスト
+./vendor/bin/sail pint                   # PHP の書式を整える
+./vendor/bin/sail pint --test            # PHP の書式を検査（ファイルは変更しない）
+./vendor/bin/sail npx prettier --write . # PHP 以外（Blade・JS・CSS など）の書式を整える
+./vendor/bin/sail npx prettier --check . # PHP 以外の書式を検査（ファイルは変更しない）
+./vendor/bin/sail bin phpstan analyse    # 静的解析
 ```
 
 `vendor/` がないとき（clone 直後など）は、Sail のイメージで依存関係をインストールする。
@@ -42,7 +44,7 @@ docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd):/var/www/html" -w /var/www/htm
 
 - 変更ごとにブランチを作り、`main` に直接コミットしない。ブランチ名は `<type>/<英語のケバブケース>`（例: `docs/add-claude-md-and-templates`）。
 - 1 つのコミットには 1 つの論理的な変更だけを入れ、各コミットの時点で検査が通る状態を保つ。
-- pull request では CI（`.github/workflows/ci.yml`）が Pint の検査・Larastan・テストを実行する。push する前に、同じ検査を手元でも通しておく。
+- pull request では CI（`.github/workflows/ci.yml`）が Pint と Prettier の検査・Larastan・テストを実行する。push する前に、同じ検査を手元でも通しておく。
 - 作業は 1 コミットずつ進める。次のコミットに入る分だけを書いてコミットし、それから次に進む。まとめて作ってから後で分割しない。
 - **コミットする前に、コミットメッセージと変更の要約を提示して承認を待つ。** ファイルの内容を下書きとして先に見せる必要はない。
 - **push する前に止まり、ユーザーが差分と pull request の本文を確認できるようにする。** 承認を得てから push し、pull request を作成する。
