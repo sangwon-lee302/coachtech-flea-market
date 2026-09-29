@@ -7,14 +7,18 @@
 ## コマンド
 
 ```bash
-./vendor/bin/sail up -d               # 起動（アプリは http://localhost、Mailpit は http://localhost:8025）
-./vendor/bin/sail down                # 停止
-./vendor/bin/sail artisan <cmd>       # Artisan
-./vendor/bin/sail composer <cmd>      # Composer
-./vendor/bin/sail test                # テスト
-./vendor/bin/sail pint                # 書式を整える
-./vendor/bin/sail pint --test         # 書式を検査（ファイルは変更しない）
-./vendor/bin/sail bin phpstan analyse # 静的解析
+./vendor/bin/sail up -d                  # 起動（アプリは http://localhost、Mailpit は http://localhost:8025）
+./vendor/bin/sail down                   # 停止
+./vendor/bin/sail artisan <cmd>          # Artisan
+./vendor/bin/sail composer <cmd>         # Composer
+./vendor/bin/sail npm run dev            # Vite の開発サーバーを起動
+./vendor/bin/sail npm run build          # アセットをビルド
+./vendor/bin/sail test                   # テスト
+./vendor/bin/sail pint                   # PHP の書式を整える
+./vendor/bin/sail pint --test            # PHP の書式を検査（ファイルは変更しない）
+./vendor/bin/sail npx prettier --write . # PHP 以外（Blade・JS・CSS など）の書式を整える
+./vendor/bin/sail npx prettier --check . # PHP 以外の書式を検査（ファイルは変更しない）
+./vendor/bin/sail bin phpstan analyse    # 静的解析
 ```
 
 `vendor/` がないとき（clone 直後など）は、Sail のイメージで依存関係をインストールする。
@@ -28,11 +32,19 @@ docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd):/var/www/html" -w /var/www/htm
 
 コメント・ドキュメント・コミットメッセージ・issue・pull request は日本語で書く。識別子は英語。
 
+## 設計の記録
+
+アーキテクチャに関わる決定は、`docs/adr/` に ADR として書く。ファイル名は `NNNN-<英語のケバブケース>.md` とし、形式は既存の ADR にならう。
+
+- 選択肢は「検討した選択肢」の節にだけ書き、「背景」では挙げない。
+- 理由は一般的な長所ではなく、このアプリに照らして書く。各選択肢の短所も省かずに書く。
+- 就職での需要のように、このプロジェクトでだけ意味を持つ理由は、そうと分かるように書く。
+
 ## Git の運用
 
 - 変更ごとにブランチを作り、`main` に直接コミットしない。ブランチ名は `<type>/<英語のケバブケース>`（例: `docs/add-claude-md-and-templates`）。
 - 1 つのコミットには 1 つの論理的な変更だけを入れ、各コミットの時点で検査が通る状態を保つ。
-- pull request では CI（`.github/workflows/ci.yml`）が Pint の検査・Larastan・テストを実行する。push する前に、同じ検査を手元でも通しておく。
+- pull request では CI（`.github/workflows/ci.yml`）が Pint と Prettier の検査・Larastan・テストを実行する。push する前に、同じ検査を手元でも通しておく。
 - 作業は 1 コミットずつ進める。次のコミットに入る分だけを書いてコミットし、それから次に進む。まとめて作ってから後で分割しない。
 - **コミットする前に、コミットメッセージと変更の要約を提示して承認を待つ。** ファイルの内容を下書きとして先に見せる必要はない。
 - **push する前に止まり、ユーザーが差分と pull request の本文を確認できるようにする。** 承認を得てから push し、pull request を作成する。

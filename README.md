@@ -7,6 +7,8 @@
 - PHP 8.5
 - Laravel 13.33.0
 - MySQL 8.4.11
+- Tailwind CSS 4.3.3
+- Vite 8.3.1
 - Laravel Sail 1.68.0（Docker による開発環境）
 - Mailpit 1.31.2（開発用のメールサーバー）
 
@@ -40,18 +42,17 @@ Docker と Git が必要。
     ./vendor/bin/sail up --wait
     ```
 
-5. アプリケーションキーを生成し、マイグレーションを実行する。
+5. アプリケーションキーの生成、マイグレーション、アセットのビルドをまとめて実行する。
 
     ```bash
-    ./vendor/bin/sail artisan key:generate
-    ./vendor/bin/sail artisan migrate
+    ./vendor/bin/sail composer setup
     ```
 
 起動後は次の URL で開ける。
 
-| 対象 | URL |
-| --- | --- |
-| アプリ | http://localhost |
+| 対象    | URL                   |
+| ------- | --------------------- |
+| アプリ  | http://localhost      |
 | Mailpit | http://localhost:8025 |
 
 停止するときは `./vendor/bin/sail down` を実行する。
