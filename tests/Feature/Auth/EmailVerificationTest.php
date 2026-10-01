@@ -30,6 +30,24 @@ class EmailVerificationTest extends TestCase
         Notification::assertSentTo($user, VerifyEmail::class);
     }
 
+    public function test_verification_email_is_written_in_japanese(): void
+    {
+        $mail = (new VerifyEmail)->toMail(User::factory()->unverified()->create());
+
+        $this->assertSame('メールアドレスの認証', $mail->subject);
+        $html = (string) $mail->render();
+        foreach ([
+            'こんにちは。',
+            '下のボタンを押して、メールアドレスの認証を完了してください。',
+            'メールアドレスを認証する',
+            '会員登録をした覚えがない場合は、このメールを破棄してください。',
+            'よろしくお願いいたします。',
+            '「メールアドレスを認証する」のボタンを押せない場合は、次の URL をブラウザに貼り付けてください。',
+        ] as $text) {
+            $this->assertStringContainsString($text, $html);
+        }
+    }
+
     public function test_unverified_user_is_redirected_to_notice_after_login(): void
     {
         $user = User::factory()->unverified()->create();
