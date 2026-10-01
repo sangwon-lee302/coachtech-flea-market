@@ -38,7 +38,7 @@ class RegisterTest extends TestCase
     {
         $response = $this->post('/register', $this->validInput());
 
-        $response->assertRedirect('/');
+        $response->assertRedirect('/email/verify');
         $user = User::where('email', 'test@example.com')->firstOrFail();
         $this->assertSame('テストユーザー', $user->name);
         $this->assertTrue(Hash::check('password123', $user->password));
