@@ -19,6 +19,7 @@ class RegisterTest extends TestCase
     {
         return [
             'ユーザー名が空' => [['name' => ''], 'name', 'ユーザー名を入力してください。'],
+            'ユーザー名が21文字' => [['name' => str_repeat('あ', 21)], 'name', 'ユーザー名は20文字以下で入力してください。'],
             'メールアドレスが空' => [['email' => ''], 'email', 'メールアドレスを入力してください。'],
             'メールアドレスの形式が不正' => [['email' => 'not-an-email'], 'email', 'メールアドレスには有効なメールアドレスを入力してください。'],
             'パスワードが空' => [['password' => '', 'password_confirmation' => ''], 'password', 'パスワードを入力してください。'],
@@ -43,6 +44,14 @@ class RegisterTest extends TestCase
         $this->assertSame('テストユーザー', $user->name);
         $this->assertTrue(Hash::check('password123', $user->password));
         $this->assertAuthenticatedAs($user);
+    }
+
+    public function test_name_of_exactly_20_characters_is_accepted(): void
+    {
+        $this->post('/register', [...$this->validInput(), 'name' => str_repeat('あ', 20)])
+            ->assertSessionHasNoErrors();
+
+        $this->assertAuthenticated();
     }
 
     public function test_password_of_exactly_8_characters_is_accepted(): void
