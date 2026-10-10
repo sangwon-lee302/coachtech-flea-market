@@ -17,6 +17,11 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            // プロフィールを設定していないユーザーがいるため、どの列も NULL を許す
+            $table->string('avatar_path')->nullable();
+            $table->string('postal_code', 8)->nullable();
+            $table->string('address')->nullable();
+            $table->string('building')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
