@@ -29,6 +29,11 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
+            // actingAs に渡したユーザーは取得済みのモデルとして扱われ、ここにない属性を読むと例外になるため、null も明示する
+            'avatar_path' => null,
+            'postal_code' => null,
+            'address' => null,
+            'building' => null,
             'remember_token' => Str::random(10),
         ];
     }

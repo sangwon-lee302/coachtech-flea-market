@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DISK', 'local'),
+    // アップロードされた画像は、ディスク名を指定せずにここで選んだディスクへ保存する。画像はどれも公開するので public にする
+    'default' => env('FILESYSTEM_DISK', 'public'),
 
     /*
     |--------------------------------------------------------------------------
@@ -43,7 +44,8 @@ return [
             'root' => storage_path('app/public'),
             'url' => rtrim((string) env('APP_URL', 'http://localhost'), '/').'/storage',
             'visibility' => 'public',
-            'throw' => false,
+            // 保存に失敗したとき、false を返して処理を続けさせるのではなく、例外にする
+            'throw' => true,
             'report' => false,
         ],
 
