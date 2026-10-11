@@ -27,6 +27,10 @@
                     </form>
                 @endauth
 
+                @guest
+                    <a href="{{ route('login') }}">ログイン</a>
+                @endguest
+
                 <a href="{{ route('profile.show') }}">マイページ</a>
             </nav>
         @endunless
