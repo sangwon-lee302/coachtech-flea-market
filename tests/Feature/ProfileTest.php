@@ -107,7 +107,7 @@ class ProfileTest extends TestCase
 
         $this->actingAs($user)
             ->patch('/mypage/profile', [...$this->validInput(), 'avatar' => UploadedFile::fake()->image('avatar.jpg')])
-            ->assertRedirect('/mypage/profile');
+            ->assertRedirect('/mypage');
 
         $this->assertDatabaseHas('users', ['id' => $user->id, ...$this->validInput()]);
         $path = $user->refresh()->avatar_path;

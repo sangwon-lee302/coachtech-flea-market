@@ -38,6 +38,6 @@ class ProfileController extends Controller
             Storage::delete($oldAvatarPath);
         }
 
-        return redirect()->route('profile.edit');
+        return redirect()->route('profile.show');
     }
 }
