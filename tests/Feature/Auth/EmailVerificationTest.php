@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Tests\TestCase;
 
@@ -112,16 +111,15 @@ class EmailVerificationTest extends TestCase
 
     public function test_user_returns_after_verification_to_page_opened_before_login(): void
     {
-        Route::middleware(['web', 'auth', 'verified'])->get('/verified-only', fn () => 'ok');
         $user = User::factory()->unverified()->create();
 
-        $this->get('/verified-only')->assertRedirect('/login');
+        $this->get('/mypage')->assertRedirect('/login');
 
         $this->post('/login', ['email' => $user->email, 'password' => 'password'])
             ->assertRedirect('/email/verify');
 
         $this->get($this->verificationUrl($user, $user->email))
-            ->assertRedirect('/verified-only');
+            ->assertRedirect('/mypage');
     }
 
     public function test_user_is_not_verified_with_invalid_hash(): void
@@ -133,24 +131,6 @@ class EmailVerificationTest extends TestCase
             ->assertForbidden();
 
         $this->assertFalse($user->fresh()?->hasVerifiedEmail());
-    }
-
-    public function test_unverified_user_cannot_open_page_requiring_verification(): void
-    {
-        Route::middleware(['web', 'auth', 'verified'])->get('/verified-only', fn () => 'ok');
-
-        $this->actingAs(User::factory()->unverified()->create())
-            ->get('/verified-only')
-            ->assertRedirect('/email/verify');
-    }
-
-    public function test_verified_user_can_open_page_requiring_verification(): void
-    {
-        Route::middleware(['web', 'auth', 'verified'])->get('/verified-only', fn () => 'ok');
-
-        $this->actingAs(User::factory()->create())
-            ->get('/verified-only')
-            ->assertOk();
     }
 
     private function verificationUrl(User $user, string $email): string

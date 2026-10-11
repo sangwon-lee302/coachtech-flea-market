@@ -17,12 +17,19 @@
                 class="h-9 max-w-full object-contain"
             />
         </a>
-        @auth
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button class="cursor-pointer text-white">ログアウト</button>
-            </form>
-        @endauth
+        {{-- ログイン・会員登録・メール認証の案内の画面では、リンクの先がどれもこれらの画面に戻るため、ナビゲーションを表示しない --}}
+        @unless (request()->routeIs('login', 'register', 'verification.notice'))
+            <nav class="flex shrink-0 items-center gap-4 text-white sm:gap-6">
+                @auth
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button class="cursor-pointer">ログアウト</button>
+                    </form>
+                @endauth
+
+                <a href="{{ route('profile.show') }}">マイページ</a>
+            </nav>
+        @endunless
     </header>
     <main>{{ $slot }}</main>
 </body>

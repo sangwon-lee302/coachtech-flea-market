@@ -22,6 +22,14 @@ class LogoutTest extends TestCase
         $this->get('/')->assertDontSee('ログアウト');
     }
 
+    public function test_header_hides_logout_button_on_verification_notice_page(): void
+    {
+        $this->actingAs(User::factory()->unverified()->create())
+            ->get('/email/verify')
+            ->assertOk()
+            ->assertDontSee('ログアウト');
+    }
+
     public function test_user_can_log_out(): void
     {
         $this->actingAs(User::factory()->create())

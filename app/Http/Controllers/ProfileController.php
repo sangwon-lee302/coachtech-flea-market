@@ -11,6 +11,11 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    public function show(#[CurrentUser] User $user): View
+    {
+        return view('profile.show', ['user' => $user]);
+    }
+
     public function edit(#[CurrentUser] User $user): View
     {
         return view('profile.edit', ['user' => $user]);
@@ -33,6 +38,6 @@ class ProfileController extends Controller
             Storage::delete($oldAvatarPath);
         }
 
-        return redirect()->route('profile.edit');
+        return redirect()->route('profile.show');
     }
 }
