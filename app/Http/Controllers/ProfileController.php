@@ -11,6 +11,11 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    public function show(#[CurrentUser] User $user): View
+    {
+        return view('profile.show', ['user' => $user]);
+    }
+
     public function edit(#[CurrentUser] User $user): View
     {
         return view('profile.edit', ['user' => $user]);
