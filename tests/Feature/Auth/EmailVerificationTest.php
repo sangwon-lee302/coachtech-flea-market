@@ -98,18 +98,18 @@ class EmailVerificationTest extends TestCase
         Notification::assertSentTo($user, VerifyEmail::class);
     }
 
-    public function test_user_is_verified_and_redirected_to_home_via_email_link(): void
+    public function test_user_is_verified_and_redirected_to_profile_page_via_email_link(): void
     {
         $user = User::factory()->unverified()->create();
 
         $this->actingAs($user)
             ->get($this->verificationUrl($user, $user->email))
-            ->assertRedirect('/?verified=1');
+            ->assertRedirect('/mypage/profile');
 
         $this->assertTrue($user->fresh()?->hasVerifiedEmail());
     }
 
-    public function test_user_returns_after_verification_to_page_opened_before_login(): void
+    public function test_page_opened_before_login_is_forgotten_after_verification(): void
     {
         $user = User::factory()->unverified()->create();
 
@@ -119,7 +119,8 @@ class EmailVerificationTest extends TestCase
             ->assertRedirect('/email/verify');
 
         $this->get($this->verificationUrl($user, $user->email))
-            ->assertRedirect('/mypage');
+            ->assertRedirect('/mypage/profile')
+            ->assertSessionMissing('url.intended');
     }
 
     public function test_user_is_not_verified_with_invalid_hash(): void
