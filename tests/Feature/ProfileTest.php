@@ -64,6 +64,15 @@ class ProfileTest extends TestCase
             ->assertSee('enctype="multipart/form-data"', false);
     }
 
+    public function test_avatar_input_points_to_preview_element(): void
+    {
+        $this->actingAs(User::factory()->create())
+            ->get('/mypage/profile')
+            ->assertOk()
+            ->assertSee('id="avatar-preview"', false)
+            ->assertSee('data-preview="avatar-preview"', false);
+    }
+
     public function test_fields_are_filled_with_current_values(): void
     {
         $user = User::factory()->create([

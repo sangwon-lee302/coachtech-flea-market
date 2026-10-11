@@ -16,6 +16,7 @@
                 <div class="flex flex-col gap-1">
                     <div class="flex items-center gap-8">
                         <x-avatar
+                            id="avatar-preview"
                             :src="$user->avatarUrl()"
                             class="size-36 shrink-0"
                         />
@@ -27,6 +28,7 @@
                                 name="avatar"
                                 type="file"
                                 accept="image/jpeg,image/png"
+                                data-preview="avatar-preview"
                                 class="sr-only"
                             />
                         </label>
