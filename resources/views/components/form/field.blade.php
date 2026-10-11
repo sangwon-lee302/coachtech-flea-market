@@ -1,4 +1,4 @@
-@props(['name', 'type' => 'text'])
+@props(['name', 'type' => 'text', 'value' => null])
 
 <div class="flex flex-col gap-1">
     <label
@@ -10,7 +10,7 @@
         id="{{ $name }}"
         name="{{ $name }}"
         type="{{ $type }}"
-        @if ($type !== 'password') value="{{ old($name) }}" @endif
+        @if ($type !== 'password') value="{{ old($name, $value) }}" @endif
         {{ $attributes->class(['rounded-sm border border-gray-500 p-2']) }}
     />
     @error($name)
