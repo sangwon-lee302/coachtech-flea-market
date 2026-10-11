@@ -62,4 +62,20 @@ class LoginTest extends TestCase
             ->get('/login')
             ->assertRedirect('/');
     }
+
+    public function test_header_links_guest_to_login_page(): void
+    {
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('ログイン')
+            ->assertSee('href="'.route('login').'"', false);
+    }
+
+    public function test_header_hides_login_link_from_logged_in_user(): void
+    {
+        $this->actingAs(User::factory()->create())
+            ->get('/')
+            ->assertOk()
+            ->assertDontSee('ログイン');
+    }
 }
